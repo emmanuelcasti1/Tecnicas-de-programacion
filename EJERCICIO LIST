@@ -1,0 +1,118 @@
+package com.mycompany.ejerciciopractica;
+import static java.lang.Math.abs;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author emmanuel Castillo G
+ */
+public class EjercicioPractica {
+
+    record informacionPersonal(String Nombres,String Apellidos,
+                               LocalDate FechaNacimiento, String Direccion,String Municipio,
+                               String NivelAcademico,String Ocupacion,
+                               Character Genero,Integer Peso,float Estatura){
+        
+    }
+    public static void main(String[] args) {
+        
+    List  <informacionPersonal> data = new ArrayList<>();
+    
+    data.add( new informacionPersonal("Juan","Perez",LocalDate.parse("15/03/1982",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"calle 123","Medellin","Licenciatura en Ingenieria","Ingeniero de Sofware",'M',70,1.70F));
+    data.add (new informacionPersonal("María","Garcia",LocalDate.parse("15/03/1985",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"calle 123","Medellin","Maestría en Psicología","Psicóloga Clínica",'F',58,1.68F));
+    data.add ( new informacionPersonal("Carlos","Perez",LocalDate.parse("10/03/2023",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"calle 123","Medellin","","",'M',3,0.80F));
+    data.add ( new informacionPersonal("Ana","Martínez",LocalDate.parse("05/09/2009",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"calle 14","Villa","Bachiller","Estudiante",'F',55,1.60F));
+    data.add (new informacionPersonal("Luisa","Hernandez",LocalDate.parse("20/06/1989",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"carrera 789","Envigado","Doctorado en Economía","Profesora Universitaria",'F',63,1.70F));
+    data.add ( new informacionPersonal("Javier","López",LocalDate.parse("12/04/1975",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"calle San Juan","Medellin","Licenciatura en arquitectura","Arquitecto independiente",'M',75,1.82F));   
+    data.add ( new informacionPersonal("Laura","Ramírez",LocalDate.parse("18/04/1998",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"avenida 6","Ciudad metropolitana","Bachiller","Estudiante",'F',52,1.65F));
+    data.add ( new informacionPersonal("Martin","Torres",LocalDate.parse("28/02/1998",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"avenida 6","Aldea","Bachiller","Estudiante",'M',68,1.78F));
+    data.add ( new informacionPersonal("Sofia","Vargas",LocalDate.parse("22/07/1995",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"Avenida 6","Rionegro","Bachiller","Estudiante",'F',60,1.63F));
+    data.add ( new informacionPersonal("Daniel","Sánchez",LocalDate.parse("08/12/1999",DateTimeFormatter.ofPattern("dd/MM/uuuu")),"Avenida 6","Rionegro","Bachiller","Estudiante",'M',72,1.79F));
+   
+    // PASO 1
+    
+    for (var informacionPersonal: data ){
+         System.out.println(informacionPersonal.Direccion);
+    }
+        System.out.println();
+  
+    // PASO 2 
+    int pesoPromed =0;
+		System.out.println("Los pesos son:");
+		System.out.println("");
+		 for (var informacionPersonal: data ){
+			pesoPromed += informacionPersonal.Peso;
+			System.out.println(informacionPersonal.Peso);
+			System.out.println();
+		}
+                System.out.println("El promedio de pesos es:" + pesoPromed/data.size());
+		System.out.println();
+         
+     // PASO 3 
+     System.out.println("las estaturas son: ");
+                System.out.println();
+                float minEstatura = 999999F;
+                float maxEstatura = 0F;
+                for (var informacionPersonal: data ){
+                    System.out.print(informacionPersonal.Estatura+"-");
+                    System.out.println();
+                    if (informacionPersonal.Estatura<minEstatura)
+                    {
+                        minEstatura = informacionPersonal.Estatura;
+                    }
+                   
+                    if (informacionPersonal.Estatura>maxEstatura){
+                        maxEstatura = informacionPersonal.Estatura;
+                    }
+                   
+                }
+                 System.out.println("el mas alto mide: "+maxEstatura);
+                 System.out.println("el mas bajo mide: "+minEstatura);
+                 System.out.println();
+                
+     // PASO 4 
+     int numHombres = 0, numMujeres=0;
+                    for (var informacionPersonal: data ){
+                     if (informacionPersonal.Genero=='M'){
+                         numHombres++;
+                     }
+                     else {
+                         if (informacionPersonal.Genero == 'F'){
+                             numMujeres++;
+                         }
+                     }
+                 }
+                 System.out.println("los hombres son: "+numHombres);
+                 System.out.println("las mujeres son: "+numMujeres);
+                 System.out.println();
+                
+    // PASO 5
+                StringBuilder todosLosNombres = new StringBuilder("");
+                for (var informacionPersonal: data ){
+                    todosLosNombres.append(informacionPersonal.Nombres);
+                    todosLosNombres.append(" ");
+                    todosLosNombres.append(informacionPersonal.Apellidos);
+                    todosLosNombres.append(", ");
+                }
+                System.out.println("Todos los nombres son: "+todosLosNombres);
+                System.out.println();
+                
+    // PASO 6            
+                 long auxMasJoven =0;
+                 for (var informacionPersonal: data ){
+                    System.out.println(informacionPersonal.FechaNacimiento);
+                    long masJoven = ChronoUnit.YEARS.between(LocalDate.now(),informacionPersonal.FechaNacimiento);
+                    if (masJoven>=auxMasJoven);{
+                    auxMasJoven = masJoven;
+                }
+                    
+                }
+                 System.out.println("El mas joven tiene "+abs(auxMasJoven)+" años");
+                 System.out.println();
+                 
+    }
+}
